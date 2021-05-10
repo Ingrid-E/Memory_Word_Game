@@ -32,9 +32,9 @@ Still haven't added file reading, leaving that for the end.
 
 Added Characters to the game.
 
-![Men](Memordy\src\images\Men.png)
-![Woman](Memordy\src\images\Woman.png)
-![Cat](Memordy\src\images\Cat.png)
+![Men](Memordy/src/images/Men.png)
+![Woman](Memordy/src/images/Woman.png)
+![Cat](Memordy/src/images/Cat.png)
 
 ------------
 
