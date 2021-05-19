@@ -25,8 +25,8 @@ Added Title and Buttons.
 ## Day 2 
 
 Almost Finished with NewGameGui.
-- [ x ] Add back to main menu button.
-- [ x ] Add next button
+- [x] Add back to main menu button.
+- [x] Add next button
 
 Still haven't added file reading, leaving that for the end.
 
@@ -52,11 +52,11 @@ Added Next and Back button to allow player navigate around the game.
 Fixed and error that made listener not work.
 
 Finished load game GUI.
--[  ] Add Player Object.
+- [ ] Add Player Object.
 
 ###Created a new component
 
-[Choose Saved Game](#)
+[Choose Saved Game](https://github.com/Ingrid-E/Memory_Word_Game/blob/33b7916dfcc30fe499d3b65c256a516e60bebd71/MemordyComponents/src/components/ChooseSavedGame.java)
 
 Shows player icon (Without save it's a grey icon), name and level. 
 Needs a player object to get name, and current level, will create another 
