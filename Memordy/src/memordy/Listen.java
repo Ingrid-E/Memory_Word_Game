@@ -5,12 +5,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JButton;
+
 
 
 public class Listen implements MouseListener, MouseMotionListener{
 	private MainMenu mainMenu;
 	private boolean menu = false;
 	private int x,y;
+	
 	
 	public Listen(MainMenu window) {
 		mainMenu = window;
@@ -19,6 +22,7 @@ public class Listen implements MouseListener, MouseMotionListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
 		if(menu) {
 			if(e.getSource() == mainMenu.exit) {
 				System.exit(0);
@@ -26,9 +30,14 @@ public class Listen implements MouseListener, MouseMotionListener{
 			if(e.getSource() == mainMenu.newGameB) {
 				mainMenu.changeGUI("New Game");
 			}
+			if(e.getSource() == mainMenu.loadGameB) {
+				mainMenu.changeGUI("Load Game");
+			}
 			if(e.getSource() == mainMenu.menChar || e.getSource() == mainMenu.womanChar || e.getSource() == mainMenu.catChar) {
 				mainMenu.choosingCharacter(e.getSource());
-				
+			}
+			if(e.getSource() == mainMenu.backButton) {
+				mainMenu.changeGUI("Main Menu");
 			}
 		}
 	}
@@ -48,8 +57,11 @@ public class Listen implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if(menu) {
-			if(e.getSource() == mainMenu.newGameB || e.getSource() == mainMenu.exit) {
+			if(e.getSource() instanceof JButton) {
 				mainMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			else {
+				mainMenu.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		}
 		
@@ -58,11 +70,7 @@ public class Listen implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(menu) {
-			if(e.getSource() == mainMenu.newGameB || e.getSource() == mainMenu.exit) {
-				mainMenu.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		}
+
 	}
 
 	@Override

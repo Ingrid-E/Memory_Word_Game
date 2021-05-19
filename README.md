@@ -20,13 +20,13 @@ Added Title and Buttons.
 **Trying to add only one mouse, text, listener class.**
 
 ------------
-- [ ] Finish New Game GUI.
+- [ x ] Finish New Game GUI.
 
 ## Day 2 
 
 Almost Finished with NewGameGui.
-- [ ] Add back to main menu button.
-- [ ] Add next button
+- [ x ] Add back to main menu button.
+- [ x ] Add next button
 
 Still haven't added file reading, leaving that for the end.
 
@@ -44,5 +44,39 @@ Put exit and background elements in constructor so it can be reused just by call
 Finished look for today:
 
 ![New Game Look](ScreenShots/Day2.PNG)
+
+## Day 3 
+
+Added Next and Back button to allow player navigate around the game.
+
+Fixed and error that made listener not work.
+
+Finished load game GUI.
+-[  ] Add Player Object.
+
+###Created a new component
+
+[Choose Saved Game](#)
+
+Shows player icon (Without save it's a grey icon), name and level. 
+Needs a player object to get name, and current level, will create another 
+constructor when i have created this object.
+
+![NewComponent](ScreenShots/ChooseSavedGameComponent.PNG)
+
+------------
+
+###Load Game GUI Look
+
+![LoadGame](ScreenShots/Day3.PNG)
+
+
+
+
+
+
+
+
+
 
 
