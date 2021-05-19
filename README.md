@@ -20,7 +20,7 @@ Added Title and Buttons.
 **Trying to add only one mouse, text, listener class.**
 
 ------------
-- [ x ] Finish New Game GUI.
+- [x] Finish New Game GUI.
 
 ## Day 2 
 
@@ -54,7 +54,7 @@ Fixed and error that made listener not work.
 Finished load game GUI.
 - [ ] Add Player Object.
 
-###Created a new component
+### Created a new component
 
 [Choose Saved Game](https://github.com/Ingrid-E/Memory_Word_Game/blob/33b7916dfcc30fe499d3b65c256a516e60bebd71/MemordyComponents/src/components/ChooseSavedGame.java)
 
@@ -66,7 +66,7 @@ constructor when i have created this object.
 
 ------------
 
-###Load Game GUI Look
+### Load Game GUI Look
 
 ![LoadGame](ScreenShots/Day3.PNG)
 
