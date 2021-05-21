@@ -79,12 +79,12 @@ Working in the words showing, still need to create the class that reads and writ
 
 ### Created two new components
 
-[Rotate Label](#)
+[Rotate Label](https://github.com/Ingrid-E/Memory_Word_Game/blob/main/MemordyComponents/src/components/RotateLabel.java)
 ------------
 
 Creates a rotated JLabel, it works to put the titled word inside the comet.
 
-[Comet Moving](#)
+[Comet Moving](https://github.com/Ingrid-E/Memory_Word_Game/blob/main/MemordyComponents/src/components/CometMoving.java)
 ------------
 
 Creates a JPanel that contains the Comet and the word, has a setText method to change the text shown in the comet. 
@@ -92,7 +92,7 @@ Creates a JPanel that contains the Comet and the word, has a setText method to c
 
 ------------------------
 
-Made a new class [Game Controls](#) to control the comets and everything realted to gameplay, doesn't have much yet.
+Made a new class [Game Controls](https://github.com/Ingrid-E/Memory_Word_Game/blob/main/Memordy/src/memordy/GameControls.java) to control the comets and everything realted to gameplay, doesn't have much yet.
 
 Thinking of making a font component to not load Nasalization in each class i need it.
 
