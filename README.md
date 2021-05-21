@@ -70,6 +70,49 @@ constructor when i have created this object.
 
 ![LoadGame](ScreenShots/Day3.PNG)
 
+## Day 4
+
+Working in the words showing, still need to create the class that reads and writes files.
+- [ ] Add Read and Write class.
+- [ ] Fix comet speed.
+- [ ] Make comet quantity.
+
+### Created two new components
+
+[Rotate Label](#)
+------------
+
+Creates a rotated JLabel, it works to put the titled word inside the comet.
+
+[Comet Moving](#)
+------------
+
+Creates a JPanel that contains the Comet and the word, has a setText method to change the text shown in the comet. 
+![Comet](ScreenShots/Day4.PNG)
+
+------------------------
+
+Made a new class [Game Controls](#) to control the comets and everything realted to gameplay, doesn't have much yet.
+
+Thinking of making a font component to not load Nasalization in each class i need it.
+
+![CometGif](ScreenShots/Comet.gif)
+
+## Game Look 
+![Game](ScreenShots/Game.gif)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

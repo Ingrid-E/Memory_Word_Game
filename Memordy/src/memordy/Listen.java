@@ -39,6 +39,9 @@ public class Listen implements MouseListener, MouseMotionListener{
 			if(e.getSource() == mainMenu.backButton) {
 				mainMenu.changeGUI("Main Menu");
 			}
+			if(e.getSource() == mainMenu.startButton) {
+				mainMenu.changeGUI("Show Words");
+			}
 		}
 	}
 

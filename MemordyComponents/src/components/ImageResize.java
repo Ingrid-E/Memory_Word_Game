@@ -3,7 +3,7 @@ package components;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class ImageResize extends ImageIcon{
+public class ImageResize{
 
 	private static final long serialVersionUID = 1L;
 	private int width, height;
@@ -16,7 +16,6 @@ public class ImageResize extends ImageIcon{
 		this.image = image;
 		type = image.getDescription();
 		type = type.substring(type.indexOf(".")+1, type.length());
-		System.out.println("Image Type: " + type);
 	}
 	
 	public ImageIcon resize() {

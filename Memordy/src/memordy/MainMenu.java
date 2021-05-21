@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import components.ChooseSavedGame;
 import components.Circle;
+import components.CometMoving;
 import components.ImageResize;
 import components.RoundTextField;
 
@@ -26,7 +27,7 @@ import javax.swing.JButton;
 
 public class MainMenu extends JFrame{
 	private JFrame main;
-	private JPanel mainMenu, newGame, loadGame;
+	private JPanel mainMenu, newGame, loadGame, showWords;
 	private JLabel background;
 	private ImageResize resizeImg;
 	private Font nasalization;
@@ -35,6 +36,8 @@ public class MainMenu extends JFrame{
 	protected JButton newGameB, loadGameB, rules, exit, startButton, backButton;
 	protected JLabel menChar, womanChar, catChar;
 	private ImageIcon backgroundImg = new ImageIcon(MainMenu.class.getResource("/images/StarBackground.gif"));
+	private GameControls game;
+	protected CometMoving comet;
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu() {
@@ -42,6 +45,7 @@ public class MainMenu extends JFrame{
 		listen = new Listen(this);
 		chosenChar = new Circle();
 		chosenChar.setVisible(false);
+		game = new GameControls(this);
 		//Basic window atributes
 		main = this;
 		main.setUndecorated(true);
@@ -239,8 +243,33 @@ public class MainMenu extends JFrame{
 		main.add(loadGame);
 	}
 	
+	private void showWordsGUI() {
+		showWords = new JPanel();
+		showWords.setSize(this.getSize());
+		showWords.setLayout(null);
+		
+		JLabel level = new JLabel("Level: " + game.level);
+		level.setBounds(17, 12, 178, 57);
+		level.setFont(nasalization.deriveFont(36f));
+		level.setForeground(Color.WHITE);
+		
+		comet = new CometMoving("Comet");
+		game.showComets(comet);
+		
+		
 	
+		showWords.add(comet);
+		showWords.add(level);
+		showWords.add(exit);
+		showWords.add(background);
+		main.add(showWords);
+	}
 	
+	public void showComet(int x, int y) {
+		comet.setBounds(x, y, 528, 428);
+	}
+	
+
 	protected void changeGUI(String change) {
 		chosenChar.setVisible(false);
 		main.getContentPane().removeAll();
@@ -250,6 +279,7 @@ public class MainMenu extends JFrame{
 		if(change == "Main Menu") mainMenuGUI();
 		if(change == "New Game") newGameGUI();
 		if(change == "Load Game") loadGameGUI();
+		if(change == "Show Words") showWordsGUI();
 	}
 
 
