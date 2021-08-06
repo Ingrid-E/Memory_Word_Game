@@ -115,8 +115,30 @@ Added another constructor to ImageResize that adds Icon compability, it first tu
 - [ ] Add choose player in load game.
 - [ ] Finish game concept
 
+## Day 6
 
+Organized gaming components in GameControls and left all releated to interface in MainMenu.java.
 
+Added words to game, and randomized words for each player, so they will have a random order of words but they wont repeat.
+
+Saved the information in a HashMap for player and player words.
+
+Example:
+
+```json
+{"Ingrid": ["word1", "word2", "word3", "word4", "word5",...],
+ "Jhonatan": ["word3", "word1", "word2", "word7", "word4",...]
+}
+```
+
+That way words do not repeat for every player in the same order.
+
+- [ ] Add Write words GUI
+- [ ] Add Next Level functions
+- [ ] Add go back to menu function
+- [ ] Add Load existing game
+
+Added ArrayList to GameData so the comets show the order of the words.
 
 
 

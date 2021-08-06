@@ -43,6 +43,7 @@ public class MainMenu extends JFrame{
 	protected CometMoving comet;
 	protected GameData data;
 	protected JTextField inputName;
+	private Player player;
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(GameData data) {
@@ -51,7 +52,7 @@ public class MainMenu extends JFrame{
 		listen = new Listen(this);
 		chosenChar = new Circle();
 		chosenChar.setVisible(false);
-		game = new GameControls(this);
+		game = new GameControls(this, this.data);
 		//Basic window atributes
 		main = this;
 		main.setUndecorated(true);
@@ -206,7 +207,6 @@ public class MainMenu extends JFrame{
 		newGameStart.setBorderPainted(false);
 		newGameStart.setFocusable(false);
 		newGameStart.addMouseListener(listen);
-		System.out.println(newGameStart.getComponentListeners());
 		
 		newGame.add(backButton);
 		newGame.add(newGameStart);
@@ -238,6 +238,7 @@ public class MainMenu extends JFrame{
 		chooseGame.setFont(nasalization.deriveFont(48f));
 		chooseGame.setForeground(Color.WHITE);
 		ArrayList<ChooseSavedGame> games = new ArrayList();
+		//Adding player that exist to game
 		int x = 0;
 		for(Player player:data.players) {
 			ChooseSavedGame game = new ChooseSavedGame(player.username, player.level, player.icon);
@@ -262,15 +263,13 @@ public class MainMenu extends JFrame{
 		showWords.setSize(this.getSize());
 		showWords.setLayout(null);
 		
-		JLabel level = new JLabel("Level: " + game.level);
+		JLabel level = new JLabel("Level: " + game.getLevel());
 		level.setBounds(17, 12, 178, 57);
 		level.setFont(nasalization.deriveFont(36f));
 		level.setForeground(Color.WHITE);
 		
 		comet = new CometMoving("Comet");
 		game.showComets(comet);
-		
-		
 	
 		showWords.add(comet);
 		showWords.add(level);
@@ -279,9 +278,10 @@ public class MainMenu extends JFrame{
 		main.add(showWords);
 	}
 	
-	public void showComet(int x, int y) {
-		comet.setBounds(x, y, 528, 428);
+	private void writeWordsGUI() {
+		
 	}
+	
 	
 
 	protected void changeGUI(String change) {
@@ -294,10 +294,6 @@ public class MainMenu extends JFrame{
 		if(change == "New Game") newGameGUI();
 		if(change == "Load Game") loadGameGUI();
 		if(change == "Show Words") showWordsGUI();
-	}
-	
-	private void startingNewGame(String name, Object icon) {
-		data.createPlayer(name, (JLabel)icon);
 	}
 	
 	class Listen implements MouseListener, MouseMotionListener{
@@ -315,7 +311,7 @@ public class MainMenu extends JFrame{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == exit) {
-				data.saveData();
+				game.exitGame();
 				System.exit(0);
 			}
 			if(e.getSource() == newGameB) {
@@ -326,7 +322,7 @@ public class MainMenu extends JFrame{
 			}
 			if(e.getSource() == menChar || e.getSource() == womanChar || e.getSource() == catChar) {
 				icon = e.getSource();
-				choosingCharacter(e.getSource());
+				choosingCharacter(icon);
 			}
 			if(e.getSource() == backButton) {
 				changeGUI("Main Menu");
@@ -336,7 +332,7 @@ public class MainMenu extends JFrame{
 			}
 			if(e.getSource() == newGameStart) {
 				changeGUI("Show Words");
-				startingNewGame(inputName.getText(), icon);
+				game.startingNewGame(inputName.getText(), icon);
 			}
 		}
 

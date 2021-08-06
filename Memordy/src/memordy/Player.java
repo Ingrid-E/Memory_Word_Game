@@ -12,6 +12,12 @@ public class Player implements Serializable{
 	private int points;
 	protected JLabel icon;
 	
+	public Player() {
+		this.username = "";
+		this.level = 1;
+		this.points = 0;
+		this.icon = null;
+	}
 	public Player(String username, JLabel icon) {
 		this.username = username;
 		this.level = 1;
