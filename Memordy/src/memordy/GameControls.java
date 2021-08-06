@@ -34,13 +34,13 @@ public class GameControls {
 			public void run() {
 				if(work == "Move Comet") {
 					comet.setBounds(x, y, 528, 428); //Arreglar que finalize en la esquina inferior
-					x = x + 5;
-					y = y + 5;
+					x = x + 4;
+					y = y + 3;
 				}
 				if(y>600) {
 					System.out.println(counter);
 				}
-				if(counter == 210) {
+				if(counter == 342) {
 					System.out.println("Cancelado");
 					comet.setText("Reinicio");
 					counter = 0;
