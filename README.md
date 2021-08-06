@@ -52,7 +52,7 @@ Added Next and Back button to allow player navigate around the game.
 Fixed and error that made listener not work.
 
 Finished load game GUI.
-- [ ] Add Player Object.
+- [x] Add Player Object.
 
 ### Created a new component
 
@@ -73,7 +73,7 @@ constructor when i have created this object.
 ## Day 4
 
 Working in the words showing, still need to create the class that reads and writes files.
-- [ ] Add Read and Write class.
+- [x] Add Read and Write class.
 - [ ] Fix comet speed.
 - [ ] Make comet quantity.
 
@@ -100,6 +100,22 @@ Thinking of making a font component to not load Nasalization in each class i nee
 
 ## Game Look 
 ![Game](ScreenShots/Game.gif)
+
+## Day 5
+
+Added Player Class which contains basic player info.
+
+Added GameData Class which reads and writes game data in a .txt file. Using ObjectOutputStream, the data class contains the players in an ArrayList.
+
+Added another constructor to ChooseSavedGame that makes the component with player icon and data.
+
+Added another constructor to ImageResize that adds Icon compability, it first turns the Icon to Image than load to ImageFile.
+
+- [ ] Add scroll when there are more than 3 players.
+- [ ] Add choose player in load game.
+- [ ] Finish game concept
+
+
 
 
 
