@@ -140,6 +140,11 @@ That way words do not repeat for every player in the same order.
 
 Added ArrayList to GameData so the comets show the order of the words.
 
+## Day 7
+
+- [ ] ** When creating new player, add restrintions to same name and obligatry to choose icon or else it will generate errors **
+
+Fix Adding enter and adding the words in a gridLayout mode
 
 
 

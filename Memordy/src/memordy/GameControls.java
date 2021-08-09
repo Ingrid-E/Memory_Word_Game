@@ -1,5 +1,6 @@
 package memordy;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,11 +8,12 @@ import java.util.TimerTask;
 import javax.swing.JLabel;
 
 import components.CometMoving;
+import components.GameText;
 
 public class GameControls {
 	protected int level;
-	private int wordQuantity;
-	private ArrayList<String> words;
+	protected int wordQuantity;
+	private ArrayList<String> words, inputtedWords;
 	private MainMenu window;
 	private CometMoving comet;
 	private Player player;
@@ -29,6 +31,13 @@ public class GameControls {
 	
 	public void exitGame() {
 		data.saveData();
+	}
+	
+	public void addWord(String word) {
+		GameText words = new GameText(word, 50);
+		words.setForeground(Color.RED);
+		words.setSize(550/2, 100);
+		window.words.add(words);
 	}
 	
 	
@@ -49,6 +58,8 @@ public class GameControls {
 		return level;
 	}
 	
+	
+	
 	public void showComets(CometMoving comet) {
 		//Mover el cometa
 		this.comet = comet;
@@ -61,7 +72,7 @@ public class GameControls {
 	}
 	
 	private void inputWords() {
-		window.changeGUI("Main Menu");
+		window.changeGUI("Input Words");
 		wordQuantity = 4 + (2*(this.level-1));
 		
 	}

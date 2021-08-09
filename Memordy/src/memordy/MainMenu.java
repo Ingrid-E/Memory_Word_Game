@@ -6,7 +6,10 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -17,11 +20,15 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import components.ChooseSavedGame;
 import components.Circle;
 import components.CometMoving;
+import components.GameButton;
+import components.GameFont;
+import components.GameText;
 import components.ImageResize;
 import components.RoundTextField;
 
@@ -30,20 +37,21 @@ import javax.swing.JButton;
 
 public class MainMenu extends JFrame{
 	private JFrame main;
-	private JPanel mainMenu, newGame, loadGame, showWords;
+	private JPanel mainMenu, newGame, loadGame, showWords, writeWords;
 	private JLabel background;
 	private ImageResize resizeImg;
-	private Font nasalization;
 	private Listen listen;
 	private Circle chosenChar;
-	protected JButton newGameB, loadGameB, rules, exit, startButton, newGameStart, backButton;
+	protected JButton newGameB, loadGameB, rules;
 	protected JLabel menChar, womanChar, catChar;
 	private ImageIcon backgroundImg = new ImageIcon(MainMenu.class.getResource("/images/StarBackground.gif"));
 	private GameControls game;
 	protected CometMoving comet;
 	protected GameData data;
-	protected JTextField inputName;
+	protected JTextField inputName, inputWords;
 	private Player player;
+	protected JPanel words;
+	private GameButton exit, startButton, backButton, newGameStart;
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(GameData data) {
@@ -53,6 +61,7 @@ public class MainMenu extends JFrame{
 		chosenChar = new Circle();
 		chosenChar.setVisible(false);
 		game = new GameControls(this, this.data);
+		
 		//Basic window atributes
 		main = this;
 		main.setUndecorated(true);
@@ -64,26 +73,6 @@ public class MainMenu extends JFrame{
 		main.addMouseMotionListener(listen);
 		main.addMouseListener(listen);
 		main.setLayout(null);
-		//Adding Font
-		try {
-			nasalization = Font.createFont(Font.TRUETYPE_FONT, new File(MainMenu.class.getResource("/fonts/nasalization-rg.ttf").getFile()));
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(nasalization);
-			
-		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//Creating Global Exit Button
-		exit = new JButton("X");
-		exit.setForeground(Color.WHITE);
-		exit.setFont(nasalization.deriveFont(36f));
-		exit.setContentAreaFilled(false);
-		exit.setBorderPainted(false);
-		exit.setFocusable(false);
-		exit.setBounds(720,0,72,72);
-		exit.addMouseListener(listen);
 		
 		//Creating Global Background
 		resizeImg = new ImageResize(backgroundImg, main.getWidth(), main.getHeight());
@@ -92,29 +81,23 @@ public class MainMenu extends JFrame{
 		background.setBounds(0, 0, 800, 600);
 		background.setIcon(backgroundImg);
 		
+		//Exit Button
+		exit = new GameButton("X", 36);
+		exit.setBounds(720,0,72,72);
+		exit.addMouseListener(listen);
+		
 		//Global Play, Back Button
-		startButton = new JButton("Start");
-		startButton.setFont(nasalization.deriveFont(48f));
+		startButton = new GameButton("Start", 48);
 		startButton.setBounds(620,530, 200,50);
-		startButton.setForeground(Color.WHITE);
-		startButton.setContentAreaFilled(false);
-		startButton.setBorderPainted(false);
-		startButton.setFocusable(false);
 		startButton.addMouseListener(listen);
 		
-		backButton = new JButton("Back");
-		backButton.setFont(nasalization.deriveFont(48f));
+		backButton = new GameButton("Back", 48);
 		backButton.setBounds(0,530, 180,50);
-		backButton.setForeground(Color.WHITE);
-		backButton.setContentAreaFilled(false);
-		backButton.setBorderPainted(false);
-		backButton.setFocusable(false);
 		backButton.addMouseListener(listen);
+		
 		
 		//Main Menu GUI
 		mainMenuGUI();
-		
-		
 		
 	}	
 
@@ -125,11 +108,9 @@ public class MainMenu extends JFrame{
 		mainMenu.setLayout(null);
 		
 		
-		JLabel title = new JLabel("Memordy");
+		GameText title = new GameText("Memordy", 100);
 		title.setBounds(134, 40, 526, 120);
-		title.setForeground(Color.WHITE);
-		title.setFont(nasalization.deriveFont(100f));
-		
+
 		newGameB = new JButton();
 		newGameB.setIcon(new ImageIcon(MainMenu.class.getResource("/images/NewGame.gif")));
 		newGameB.setContentAreaFilled(false);
@@ -169,20 +150,16 @@ public class MainMenu extends JFrame{
 		newGame.setSize(this.getSize());
 		newGame.setLayout(null);
 		
-		JLabel playerName = new JLabel("Player Name");
+		GameText playerName = new GameText("Player Name",48);
 		playerName.setBounds(227, 46, 350, 60);
-		playerName.setForeground(Color.WHITE);
-		playerName.setFont(nasalization.deriveFont(48f));
 		
 		inputName = new RoundTextField(25);
 		inputName.setBounds(185, 127, 415, 53);
-		inputName.setFont(nasalization.deriveFont(36f));
+		inputName.setFont(GameFont.nasalization.deriveFont(36f));
 		inputName.setForeground(Color.WHITE);
 		
-		JLabel chooseCharacter = new JLabel("Choose Character");
+		GameText chooseCharacter = new GameText("Choose Character",48);
 		chooseCharacter.setBounds(170, 243, 460, 60);
-		chooseCharacter.setFont(nasalization.deriveFont(48f));
-		chooseCharacter.setForeground(Color.WHITE);
 		
 		menChar = new JLabel();
 		menChar.setIcon(new ImageIcon(MainMenu.class.getResource("/images/Men.png")));
@@ -199,13 +176,8 @@ public class MainMenu extends JFrame{
 		catChar.setBounds(517, 340, 160, 160);
 		catChar.addMouseListener(listen);
 		
-		newGameStart = new JButton("Start");
-		newGameStart.setFont(nasalization.deriveFont(48f));
+		newGameStart = new GameButton("Start", 48);
 		newGameStart.setBounds(620,530, 200,50);
-		newGameStart.setForeground(Color.WHITE);
-		newGameStart.setContentAreaFilled(false);
-		newGameStart.setBorderPainted(false);
-		newGameStart.setFocusable(false);
 		newGameStart.addMouseListener(listen);
 		
 		newGame.add(backButton);
@@ -221,23 +193,16 @@ public class MainMenu extends JFrame{
 		newGame.add(background);
 		main.add(newGame);
 	}
-	
-	protected void choosingCharacter(Object source) {
-		chosenChar.setVisible(true);
-		JLabel character = (JLabel)source;
-		chosenChar.setBounds(character.getBounds().x,character.getBounds().y, 165, 165);
-	}
-	
+
 	private void loadGameGUI() {
 		loadGame = new JPanel();
 		loadGame.setSize(this.getSize());
 		loadGame.setLayout(null);
 		
-		JLabel chooseGame = new JLabel("Choose Game");
+		GameText chooseGame = new GameText("Choose Game",48);
 		chooseGame.setBounds(231, 33, 352, 57);
-		chooseGame.setFont(nasalization.deriveFont(48f));
-		chooseGame.setForeground(Color.WHITE);
-		ArrayList<ChooseSavedGame> games = new ArrayList();
+
+		ArrayList<ChooseSavedGame> games = new ArrayList<>();
 		//Adding player that exist to game
 		int x = 0;
 		for(Player player:data.players) {
@@ -263,10 +228,8 @@ public class MainMenu extends JFrame{
 		showWords.setSize(this.getSize());
 		showWords.setLayout(null);
 		
-		JLabel level = new JLabel("Level: " + game.getLevel());
+		GameText level = new GameText("Level: " + game.getLevel(), 36);
 		level.setBounds(17, 12, 178, 57);
-		level.setFont(nasalization.deriveFont(36f));
-		level.setForeground(Color.WHITE);
 		
 		comet = new CometMoving("Comet");
 		game.showComets(comet);
@@ -279,7 +242,59 @@ public class MainMenu extends JFrame{
 	}
 	
 	private void writeWordsGUI() {
+		writeWords = new JPanel();
+		writeWords.setSize(this.getSize());
+		writeWords.setLayout(null);
 		
+		GameText wordTitle = new GameText("Words",48);
+		wordTitle.setBounds(300, 50, 165, 56);
+		
+		inputWords = new RoundTextField(45);
+		inputWords.setBounds(114, 140, 552, 50);
+		inputWords.setFont(GameFont.nasalization.deriveFont(36f));
+		inputWords.setForeground(Color.WHITE);
+		inputWords.addActionListener(listen);
+		
+		JPanel testing = new JPanel();
+		testing.setBounds(115, 250, 550, 200);
+		testing.setLayout(new GridLayout(2, 2));
+		
+		words = new JPanel();
+		words.setBounds(115, 250, 550, 200);
+		words.setLayout(new GridLayout(3, 3));
+		
+		GameText text = new GameText("Hello", 50);
+		text.setForeground(Color.RED);
+		text.setSize(550/2, 100);
+		GameText text2 = new GameText("DIO", 50);
+		text2.setForeground(Color.RED);
+		text2.setSize(550/2, 100);
+		testing.add(text);
+		testing.add(text2);
+		System.out.println(words.getLayout());
+
+		
+		
+		ImageIcon imgBackground = new ImageIcon(MainMenu.class.getResource("/images/planetBackground.gif"));
+		ImageResize resizeBackground = new ImageResize(imgBackground, main.getWidth(), main.getHeight());
+		imgBackground = resizeBackground.resize();
+		JLabel planetBackground = new JLabel();
+		planetBackground.setBounds(0, 0, 800, 600);
+		planetBackground.setIcon(imgBackground);
+		
+		writeWords.add(wordTitle);
+		writeWords.add(inputWords);
+		writeWords.add(testing);
+		writeWords.add(exit);
+		writeWords.add(planetBackground);
+		main.add(writeWords);
+		
+	}
+	
+	protected void choosingCharacter(Object source) {
+		chosenChar.setVisible(true);
+		JLabel character = (JLabel)source;
+		chosenChar.setBounds(character.getBounds().x,character.getBounds().y, 165, 165);
 	}
 	
 	
@@ -290,13 +305,29 @@ public class MainMenu extends JFrame{
 		main.revalidate();
 		main.repaint();
 		
-		if(change == "Main Menu") mainMenuGUI();
-		if(change == "New Game") newGameGUI();
-		if(change == "Load Game") loadGameGUI();
-		if(change == "Show Words") showWordsGUI();
+		switch(change) {
+			case "MainMenu":
+				mainMenuGUI();
+				break;
+			case "New Game":
+				writeWordsGUI();
+				break;
+			case "Load Game":
+				loadGameGUI();
+				break;
+			case "Show Words":
+				showWordsGUI();
+				break;
+			case "Input Words":
+				writeWordsGUI();
+				break;
+			default:
+				mainMenuGUI();
+				break;
+		}
 	}
 	
-	class Listen implements MouseListener, MouseMotionListener{
+	class Listen implements MouseListener, MouseMotionListener, ActionListener{
 		private MainMenu mainMenu;
 		private boolean menu = false;
 		private int x,y;
@@ -377,6 +408,13 @@ public class MainMenu extends JFrame{
 		public void mouseMoved(MouseEvent e) {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println(inputWords.getText());
+			game.addWord(inputWords.getText());
 		}
 
 	}
