@@ -1,22 +1,17 @@
 package memordy;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,9 +26,7 @@ import components.GameFont;
 import components.GameText;
 import components.ImageResize;
 import components.RoundTextField;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import components.ShowWords;
 
 public class MainMenu extends JFrame{
 	private JFrame main;
@@ -50,8 +43,9 @@ public class MainMenu extends JFrame{
 	protected GameData data;
 	protected JTextField inputName, inputWords;
 	private Player player;
-	protected JPanel words;
+	protected JTextArea words;
 	private GameButton exit, startButton, backButton, newGameStart;
+	private ShowWords wordTable;
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(GameData data) {
@@ -244,7 +238,7 @@ public class MainMenu extends JFrame{
 	private void writeWordsGUI() {
 		writeWords = new JPanel();
 		writeWords.setSize(this.getSize());
-		writeWords.setLayout(null);
+		writeWords.setLayout(new BorderLayout());
 		
 		GameText wordTitle = new GameText("Words",48);
 		wordTitle.setBounds(300, 50, 165, 56);
@@ -254,25 +248,15 @@ public class MainMenu extends JFrame{
 		inputWords.setFont(GameFont.nasalization.deriveFont(36f));
 		inputWords.setForeground(Color.WHITE);
 		inputWords.addActionListener(listen);
+				
+		wordTable = new ShowWords(6,2);
+		wordTable.setContainerSize(550, 300);
+		wordTable.setLocation(116, 210);
+		wordTable.setRowSelectionAllowed(false);
+		wordTable.setColumnSelectionAllowed(false);
+		wordTable.setCellSelectionEnabled(false);
+		wordTable.setFocusable(false);
 		
-		JPanel testing = new JPanel();
-		testing.setBounds(115, 250, 550, 200);
-		testing.setLayout(new GridLayout(2, 2));
-		
-		words = new JPanel();
-		words.setBounds(115, 250, 550, 200);
-		words.setLayout(new GridLayout(3, 3));
-		
-		GameText text = new GameText("Hello", 50);
-		text.setForeground(Color.RED);
-		text.setSize(550/2, 100);
-		GameText text2 = new GameText("DIO", 50);
-		text2.setForeground(Color.RED);
-		text2.setSize(550/2, 100);
-		testing.add(text);
-		testing.add(text2);
-		System.out.println(words.getLayout());
-
 		
 		
 		ImageIcon imgBackground = new ImageIcon(MainMenu.class.getResource("/images/planetBackground.gif"));
@@ -284,7 +268,7 @@ public class MainMenu extends JFrame{
 		
 		writeWords.add(wordTitle);
 		writeWords.add(inputWords);
-		writeWords.add(testing);
+		writeWords.add(wordTable);
 		writeWords.add(exit);
 		writeWords.add(planetBackground);
 		main.add(writeWords);
@@ -331,6 +315,7 @@ public class MainMenu extends JFrame{
 		private MainMenu mainMenu;
 		private boolean menu = false;
 		private int x,y;
+		private int z = 0;
 		private Object icon;
 		
 		
@@ -413,8 +398,7 @@ public class MainMenu extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(inputWords.getText());
-			game.addWord(inputWords.getText());
+			wordTable.addWord(inputWords.getText());
 		}
 
 	}

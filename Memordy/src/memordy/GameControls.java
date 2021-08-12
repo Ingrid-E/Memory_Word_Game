@@ -50,7 +50,7 @@ public class GameControls {
 		this.player = player;
 		System.out.println(player.level);
 		this.level = player.level;
-		this.words = data.getPlayerWords(player.username);
+		this.words = player.getWords();
 		this.comet.setText(words.get(0));
 	}
 	

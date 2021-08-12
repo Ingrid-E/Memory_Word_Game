@@ -19,11 +19,9 @@ public class GameData implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected ArrayList<Player> players;
 	protected ArrayList<String> words;
-	protected HashMap<String, ArrayList<String>> wordList;
 
 	public GameData() {
 		this.players = new ArrayList<Player>();
-		this.wordList = new HashMap<>();
 		readWords();
 	}
 	
@@ -31,10 +29,7 @@ public class GameData implements Serializable{
 		ArrayList<String> randomize = new ArrayList<>();
 		randomize.addAll(words);
 		Collections.shuffle(randomize);
-		wordList.put(player.username, randomize);
-	}
-	public ArrayList<String> getPlayerWords(String name){
-		return wordList.get(name);
+		player.setWords(randomize);
 	}
 	
 	private void readWords() {

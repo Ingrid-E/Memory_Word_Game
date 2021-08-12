@@ -146,9 +146,15 @@ Added ArrayList to GameData so the comets show the order of the words.
 
 Fix Adding enter and adding the words in a gridLayout mode
 
+## Day 8
+got stuck all day trying to do something that is not posible. F
 
+## Day 9
 
+Made JTable that shows words with invisible background and added a font size that works for all words that are it's len is 13 or lower.
 
+What if the user inputs a word longer? Will it break the code?
+Yes... need to **fix that**
 
 
 
