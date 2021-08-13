@@ -28,6 +28,4 @@ public class RotateLabel extends JLabel {
        gx.rotate(0.6, getX() + getWidth()/2, getY() + getHeight()/2);
        super.paintComponent(g);
     }
-    
-    
  }

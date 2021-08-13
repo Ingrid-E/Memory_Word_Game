@@ -294,7 +294,7 @@ public class MainMenu extends JFrame{
 				mainMenuGUI();
 				break;
 			case "New Game":
-				writeWordsGUI();
+				newGameGUI();
 				break;
 			case "Load Game":
 				loadGameGUI();

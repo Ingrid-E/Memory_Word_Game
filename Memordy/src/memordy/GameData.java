@@ -2,11 +2,13 @@ package memordy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,13 +32,14 @@ public class GameData implements Serializable{
 		randomize.addAll(words);
 		Collections.shuffle(randomize);
 		player.setWords(randomize);
+		player.setLevelWords();
 	}
 	
 	private void readWords() {
 		words = new ArrayList<>();
 		String line;
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("src/gameData/words.txt"));
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/gameData/palabras.txt"), "UTF-8"));
 			while((line = reader.readLine())!=null) {
 				words.add(line);
 			}

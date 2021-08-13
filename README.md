@@ -156,6 +156,18 @@ Made JTable that shows words with invisible background and added a font size tha
 What if the user inputs a word longer? Will it break the code?
 Yes... need to **fix that**
 
+## Day 10
+
+No! Dont need to fix that because the only words that will get added to the word table are that ones that are correct!
+
+Added enconding to file reader so that it comes out with "tildes" and i can do a spanish version. 
+
+Creating word level game array containenr so that it contains the words of the two sets for the player.
+
+- [ ] Add to only show words that work in tableWords
+- [ ] Add wrong word look to TextField
+
+
 
 
 
