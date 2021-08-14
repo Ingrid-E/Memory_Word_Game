@@ -133,7 +133,7 @@ Example:
 
 That way words do not repeat for every player in the same order.
 
-- [ ] Add Write words GUI
+- [x] Add Write words GUI
 - [ ] Add Next Level functions
 - [ ] Add go back to menu function
 - [ ] Add Load existing game
@@ -142,7 +142,7 @@ Added ArrayList to GameData so the comets show the order of the words.
 
 ## Day 7
 
-- [ ] ** When creating new player, add restrintions to same name and obligatry to choose icon or else it will generate errors **
+- [x] ** When creating new player, add restrintions to same name and obligatry to choose icon or else it will generate errors **
 
 Fix Adding enter and adding the words in a gridLayout mode
 
@@ -164,10 +164,19 @@ Added enconding to file reader so that it comes out with "tildes" and i can do a
 
 Creating word level game array containenr so that it contains the words of the two sets for the player.
 
-- [ ] Add to only show words that work in tableWords
-- [ ] Add wrong word look to TextField
+- [x] Add to only show words that work in tableWords
+- [x] Add wrong word look to TextField
 
+## Day 11
 
+Added red outline when incorrect word is inputted
+Added green color when all words are inputted
+
+## Day 12
+
+Added Next Levels!
+
+- [ ] Add to show how many correct words the user inputted in that level
 
 
 

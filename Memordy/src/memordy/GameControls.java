@@ -12,9 +12,9 @@ import components.GameText;
 import components.RoundTextField;
 
 public class GameControls {
-	protected int level;
-	protected int wordQuantity;
-	private ArrayList<String> words, inputtedWords;
+	protected int level,set;
+	private ArrayList<String> inputtedWords;
+	private String[] words;
 	private MainMenu window;
 	private CometMoving comet;
 	private Player player;
@@ -24,8 +24,8 @@ public class GameControls {
 	public GameControls(MainMenu window, GameData data) {
 		this.window = window;
 		this.player = new Player();
-		this.wordQuantity = 4;
 		this.level = 1;
+		this.set = 0;
 		this.data = data;
 		this.comet = new CometMoving("");
 	}
@@ -51,8 +51,8 @@ public class GameControls {
 		this.player = player;
 		System.out.println(player.level);
 		this.level = player.level;
-		this.words = player.getWords();
-		this.comet.setText(words.get(0));
+		this.words = player.getLevelWords();
+		this.comet.setText(words[player.wordQuantity-1]);
 	}
 	
 	public Player getPlayer() {
@@ -75,13 +75,11 @@ public class GameControls {
 	}
 	
 	private void nextWord(int word) {
-		comet.setText(words.get(word));
+		comet.setText(words[word]);
 	}
 	
 	private void inputWords() {
 		window.changeGUI("Input Words");
-		wordQuantity = 4 + (2*(this.level-1));
-		
 	}
 	
 	public void wrongWord(RoundTextField textField) {
@@ -132,7 +130,7 @@ public class GameControls {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			int counter = 0;
-			int word = 0;
+			int word = player.wordQuantity-1;
 			int x = -528;
 			int y = -428;
 			@Override
@@ -143,18 +141,20 @@ public class GameControls {
 					y = y + 3;
 				}
 				if(y>600) {
-					System.out.println(counter);
+					System.out.println("Y: " + counter);
 				}
 				if(counter == 342) {
-					if(word == (wordQuantity-1)) {
+					if(word == 0) {
 						inputWords();
 						timer.cancel();
+					}else {
+						word--;
+						System.out.println("Word: " + word);
+						nextWord(word);
+						counter = 0;
+						x = -528;
+						y = -428;
 					}
-					word++;
-					nextWord(word);
-					counter = 0;
-					x = -528;
-					y = -428;
 				}
 				counter ++;
 			};

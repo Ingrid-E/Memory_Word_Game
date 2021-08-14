@@ -10,8 +10,8 @@ public class Player implements Serializable{
 	private static final long serialVersionUID = 1L;
 	//Atributes
 	protected String username;
-	protected int level;
-	private int points, wordQuantity;
+	protected int level, set,wordQuantity;
+	private int points;
 	protected JLabel icon;
 	private ArrayList<String> words;
 	private String[][] levelWords;
@@ -20,6 +20,7 @@ public class Player implements Serializable{
 	public Player() {
 		this.username = "";
 		this.level = 1;
+		this.set = 0;
 		this.points = 0;
 		this.icon = null;
 		this.wordQuantity = 4 + (2*(this.level-1));
@@ -30,6 +31,7 @@ public class Player implements Serializable{
 	public Player(String username, JLabel icon) {
 		this.username = username;
 		this.level = 1;
+		this.set = 0;
 		this.points = 0;
 		this.wordQuantity = 4 + (2*(this.level-1));
 		this.icon = icon;
@@ -43,6 +45,7 @@ public class Player implements Serializable{
 		this.wordQuantity = 4 + (2*(this.level-1));
 		this.points = points;
 		this.icon = icon;
+		this.set = 0;
 		this.words = new ArrayList<>();
 		this.wordsGuessed = new ArrayList<>();
 		this.levelWords = new String[2][wordQuantity];
@@ -55,6 +58,7 @@ public class Player implements Serializable{
 	}
 	
 	public void setLevelWords() {
+		wordQuantity = 4 + (2*(this.level-1));
 		for(int i = 0; i < wordQuantity*2; i++) {
 			if(i >= wordQuantity) {
 				levelWords[1][i-4] = words.get(i);
@@ -64,7 +68,7 @@ public class Player implements Serializable{
 		}
 	}
 	
-	public String[] getLevelWords(int set) {
+	public String[] getLevelWords() {
 		return levelWords[set];
 	}
 	public void addGuessedWord(String word) {

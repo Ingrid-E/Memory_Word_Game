@@ -32,7 +32,7 @@ import components.ShowWords;
 
 public class MainMenu extends JFrame{
 	private JFrame main;
-	private JPanel mainMenu, newGame, loadGame, showWords, writeWords;
+	private JPanel mainMenu, newGame, loadGame, showWords, writeWords, inputtedWords;
 	private JLabel background;
 	private ImageResize resizeImg;
 	private Listen listen;
@@ -47,6 +47,7 @@ public class MainMenu extends JFrame{
 	private Player player;
 	protected JTextArea words;
 	private GameButton exit, startButton, backButton, newGameStart;
+	private GameText chooseCharacter;
 	private ShowWords wordTable;
 	private Timer timer;
 	private static final long serialVersionUID = 1L;
@@ -157,7 +158,7 @@ public class MainMenu extends JFrame{
 		inputName.setFont(GameFont.nasalization.deriveFont(36f));
 		inputName.setForeground(Color.WHITE);
 		
-		GameText chooseCharacter = new GameText("Choose Character",48);
+		chooseCharacter = new GameText("Choose Character",48);
 		chooseCharacter.setBounds(170, 243, 460, 60);
 		
 		menChar = new JLabel();
@@ -258,7 +259,7 @@ public class MainMenu extends JFrame{
 				
 		wordTable = new ShowWords(2,2);
 		wordTable.setContainerSize(550, 300);
-		wordTable.setWordList(player.getLevelWords(0));
+		wordTable.setWordList(player.getLevelWords());
 		wordTable.setLocation(116, 210);
 		wordTable.setRowSelectionAllowed(false);
 		wordTable.setColumnSelectionAllowed(false);
@@ -278,6 +279,20 @@ public class MainMenu extends JFrame{
 		writeWords.add(exit);
 		writeWords.add(planetBackground);
 		main.add(writeWords);
+		
+	}
+	
+	private void wordInputtedGUI() {
+		inputtedWords = new JPanel();
+		inputtedWords.setSize(this.getSize());
+		inputtedWords.setLayout(null);
+		
+		GameText titleWordsInputted = new GameText("Correct Words: ", 48);
+		titleWordsInputted.setBounds(30, 30, 500, 150);
+		
+		
+		
+		
 		
 	}
 	
@@ -339,6 +354,7 @@ public class MainMenu extends JFrame{
 		main.repaint();
 	}
 	
+	
 	class Listen implements MouseListener, MouseMotionListener, ActionListener{
 		private MainMenu mainMenu;
 		private boolean menu = false;
@@ -369,16 +385,21 @@ public class MainMenu extends JFrame{
 				choosingCharacter(icon);
 			}
 			if(e.getSource() == backButton) {
+				icon = null;
 				changeGUI("Main Menu");
 			}
 			if(e.getSource() == startButton) {
 				changeGUI("Show Words");
 			}
 			if(e.getSource() == newGameStart) {
-				String playerName = inputName.getText();
-				data.createPlayer(playerName, (JLabel)icon);
-				player = data.getPlayer(playerName);
-				changeGUI("Show Words");
+				if(icon == null) {
+					chooseCharacter.setForeground(Color.YELLOW);
+				}else {
+					String playerName = inputName.getText();
+					data.createPlayer(playerName, (JLabel)icon);
+					player = data.getPlayer(playerName);
+					changeGUI("Show Words");
+				}
 			}
 		}
 
@@ -437,13 +458,23 @@ public class MainMenu extends JFrame{
 			
 			if(wordTable.completedWords()) {
 				wordTable.setForeground(Color.GREEN);
+				timer = new Timer();
 				timer.schedule(new TimerTask() {
 					int time = 3;
 					@Override
 					public void run() {
 						time--;
 						if(time == 0) {
-							changeGUI("Show Words"); //Declare new level
+							if(player.set == 0) {
+								player.set = 1;
+								changeGUI("Show Words"); //Declare new level
+							}else {
+								
+								player.set = 0;
+								player.level++;
+								player.setLevelWords();
+								changeGUI("Show Words"); //Declare new level
+							}
 							timer.cancel();
 						}
 					}
