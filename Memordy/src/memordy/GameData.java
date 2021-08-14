@@ -23,7 +23,7 @@ public class GameData implements Serializable{
 	protected ArrayList<String> words;
 
 	public GameData() {
-		this.players = new ArrayList<Player>();
+		this.players = new ArrayList<>();
 		readWords();
 	}
 	
@@ -39,7 +39,7 @@ public class GameData implements Serializable{
 		words = new ArrayList<>();
 		String line;
 		try {
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/gameData/palabras.txt"), "UTF-8"));
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/gameData/words.txt"), "UTF-8"));
 			while((line = reader.readLine())!=null) {
 				words.add(line);
 			}
@@ -59,11 +59,13 @@ public class GameData implements Serializable{
 	protected Player getPlayer(String name) {
 		Player user = null;
 		for(Player player: players) {
-			if(player.username == name) {
+			System.out.println(name + " " + player.username);
+			if(player.username.equals(name)) {
 				user = player;
 				return user;
 			}
 		}
+		System.out.println("Looking for... " + user);
 		return user;
 	}
 	

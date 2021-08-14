@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,11 +43,12 @@ public class MainMenu extends JFrame{
 	private GameControls game;
 	protected CometMoving comet;
 	protected GameData data;
-	protected JTextField inputName, inputWords;
+	protected RoundTextField inputName, inputWords;
 	private Player player;
 	protected JTextArea words;
 	private GameButton exit, startButton, backButton, newGameStart;
 	private ShowWords wordTable;
+	private Timer timer;
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(GameData data) {
@@ -88,6 +91,8 @@ public class MainMenu extends JFrame{
 		backButton = new GameButton("Back", 48);
 		backButton.setBounds(0,530, 180,50);
 		backButton.addMouseListener(listen);
+		
+		timer = new Timer();
 		
 		
 		//Main Menu GUI
@@ -222,11 +227,11 @@ public class MainMenu extends JFrame{
 		showWords.setSize(this.getSize());
 		showWords.setLayout(null);
 		
-		GameText level = new GameText("Level: " + game.getLevel(), 36);
+		GameText level = new GameText("Level: " + player.level, 36);
 		level.setBounds(17, 12, 178, 57);
 		
 		comet = new CometMoving("Comet");
-		game.showComets(comet);
+		game.showComets(comet, player);
 	
 		showWords.add(comet);
 		showWords.add(level);
@@ -238,10 +243,12 @@ public class MainMenu extends JFrame{
 	private void writeWordsGUI() {
 		writeWords = new JPanel();
 		writeWords.setSize(this.getSize());
-		writeWords.setLayout(new BorderLayout());
+		writeWords.setLayout(null);
 		
 		GameText wordTitle = new GameText("Words",48);
 		wordTitle.setBounds(300, 50, 165, 56);
+		
+		wordTimer(60);
 		
 		inputWords = new RoundTextField(45);
 		inputWords.setBounds(114, 140, 552, 50);
@@ -249,15 +256,14 @@ public class MainMenu extends JFrame{
 		inputWords.setForeground(Color.WHITE);
 		inputWords.addActionListener(listen);
 				
-		wordTable = new ShowWords(6,2);
+		wordTable = new ShowWords(2,2);
 		wordTable.setContainerSize(550, 300);
+		wordTable.setWordList(player.getLevelWords(0));
 		wordTable.setLocation(116, 210);
 		wordTable.setRowSelectionAllowed(false);
 		wordTable.setColumnSelectionAllowed(false);
 		wordTable.setCellSelectionEnabled(false);
 		wordTable.setFocusable(false);
-		
-		
 		
 		ImageIcon imgBackground = new ImageIcon(MainMenu.class.getResource("/images/planetBackground.gif"));
 		ImageResize resizeBackground = new ImageResize(imgBackground, main.getWidth(), main.getHeight());
@@ -273,6 +279,26 @@ public class MainMenu extends JFrame{
 		writeWords.add(planetBackground);
 		main.add(writeWords);
 		
+	}
+	
+	private void wordTimer(int countDown) {
+		GameText timerLabel  = new GameText("Timer: " + countDown, 36);
+		timerLabel.setBounds(20,20,200,50);
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			int time = countDown;
+			@Override
+			public void run() {
+				time--;
+				timerLabel.setText("Timer: " + time);
+				if(countDown == 0) {
+					timer.cancel();
+					changeGUI("Main Menu");
+				}
+			}
+			
+		}, 1000, 1000);
+		writeWords.add(timerLabel);
 	}
 	
 	protected void choosingCharacter(Object source) {
@@ -309,6 +335,8 @@ public class MainMenu extends JFrame{
 				mainMenuGUI();
 				break;
 		}
+		main.revalidate();
+		main.repaint();
 	}
 	
 	class Listen implements MouseListener, MouseMotionListener, ActionListener{
@@ -347,8 +375,10 @@ public class MainMenu extends JFrame{
 				changeGUI("Show Words");
 			}
 			if(e.getSource() == newGameStart) {
+				String playerName = inputName.getText();
+				data.createPlayer(playerName, (JLabel)icon);
+				player = data.getPlayer(playerName);
 				changeGUI("Show Words");
-				game.startingNewGame(inputName.getText(), icon);
 			}
 		}
 
@@ -398,7 +428,29 @@ public class MainMenu extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			wordTable.addWord(inputWords.getText());
+			if(wordTable.checkIfValid(inputWords.getText(), player.getGuessedWords())) {
+				player.addGuessedWord(inputWords.getText());
+				inputWords.setText("");
+			}else if(!wordTable.checkIfValid(inputWords.getText(), player.getGuessedWords())) {
+				game.wrongWord(inputWords);
+			}
+			
+			if(wordTable.completedWords()) {
+				wordTable.setForeground(Color.GREEN);
+				timer.schedule(new TimerTask() {
+					int time = 3;
+					@Override
+					public void run() {
+						time--;
+						if(time == 0) {
+							changeGUI("Show Words"); //Declare new level
+							timer.cancel();
+						}
+					}
+					
+				}, 0, 1000);
+			}
+			
 		}
 
 	}

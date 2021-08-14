@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import components.CometMoving;
 import components.GameText;
+import components.RoundTextField;
 
 public class GameControls {
 	protected int level;
@@ -24,7 +25,7 @@ public class GameControls {
 		this.window = window;
 		this.player = new Player();
 		this.wordQuantity = 4;
-		this.level = player.level;
+		this.level = 1;
 		this.data = data;
 		this.comet = new CometMoving("");
 	}
@@ -54,17 +55,23 @@ public class GameControls {
 		this.comet.setText(words.get(0));
 	}
 	
+	public Player getPlayer() {
+		System.out.println("Player name: " + this.player.username);
+		return this.player;
+	}
+	
 	public int getLevel() {
 		return level;
 	}
 	
 	
 	
-	public void showComets(CometMoving comet) {
+	public void showComets(CometMoving comet, Player player) {
 		//Mover el cometa
 		this.comet = comet;
 		comet.setBounds(-528, -428, 528, 428);
-		timer("Move Comet");
+		setPlayer(player);
+		moveComets("Move Comet");
 	}
 	
 	private void nextWord(int word) {
@@ -77,7 +84,51 @@ public class GameControls {
 		
 	}
 	
-	private void timer(String work) {
+	public void wrongWord(RoundTextField textField) {
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			int counter = 0;
+			int moveX = textField.getX();
+			int initialPos = textField.getX();
+			boolean right = true;
+			boolean left = false;
+			@Override
+			public void run() {
+				textField.borderColor = Color.red;
+				if(right) {
+					if(moveX == initialPos+3) {
+						left = true;
+						right = false;
+					}else {
+						moveX++;
+					}
+				}else if(left) {
+					if(moveX == initialPos-3) {
+						right = false;
+						left = false;
+					}else {
+						moveX--;
+					}
+				}else {
+					if(moveX == initialPos) {
+						System.out.println(counter);
+						textField.borderColor = new Color(234,55,234);
+						timer.cancel();
+					}else {
+						moveX++;
+					}
+				}
+				textField.setLocation(moveX, textField.getY());
+				counter++;
+			}
+			
+		};
+		timer.scheduleAtFixedRate(task, 0, 30);
+	}
+	
+	
+	private void moveComets(String work) {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			int counter = 0;

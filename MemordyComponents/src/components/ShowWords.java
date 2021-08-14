@@ -1,6 +1,7 @@
 package components;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -10,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 public class ShowWords extends JTable{
 	private static final long serialVersionUID = 1L;
 	private int rows,columns,length;
+	private String[] words;
+	private ArrayList<String> correctWords;
 	
 	public ShowWords(int rows, int columns) {
 		super(new DefaultTableModel(rows,columns));
@@ -19,8 +22,10 @@ public class ShowWords extends JTable{
 		this.setForeground(Color.WHITE);
 		this.setOpaque(false);
 		this.setShowGrid(false);
-
+	}
 	
+	public void setWordList(String[] wordList) {
+		this.words = wordList;
 	}
 	
 	public void setContainerSize(int width, int height) {
@@ -40,23 +45,47 @@ public class ShowWords extends JTable{
 		System.out.println(this.getDefaultRenderer(Object.class));
 	}
 	
-	public void addWord(String word) {
-		
-		for(int i = 0; i< this.rows; i++) {
-			for(int j=0; j < this.columns; j++) {
-				if(this.getModel().getValueAt(i, j) == null) {
-					System.out.println(length);
-					if(word.length() > length) {
-						length = word.length();
+	public boolean addWord(String word) {
+		boolean emptyCells = false;
+			for(int i = 0; i< this.rows; i++) {
+				for(int j=0; j < this.columns; j++) {
+					if(this.getModel().getValueAt(i, j) == null) {
 						System.out.println(length);
+						if(word.length() > length) {
+							length = word.length();
+							System.out.println(length);
+						}
+						float size = ((13-this.length)*2)+30;
+						this.setFont(GameFont.nasalization.deriveFont(size));
+						this.getModel().setValueAt(word, i, j);
+						return true;
 					}
-					float size = ((13-this.length)*2)+30;
-					this.setFont(GameFont.nasalization.deriveFont(size));
-					this.getModel().setValueAt(word, i, j);
-					return;
+				}
+			}
+			return emptyCells;
+	}
+	
+	
+	
+	public boolean completedWords() {
+		for(int i=0; i <this.rows;i++) {
+			for(int j=0; j < this.columns;j++) {
+				if(this.getModel().getValueAt(i, j) == null) {
+					return false;
 				}
 			}
 		}
+		return true;
+	}
+	
+	public boolean checkIfValid(String word, ArrayList<String> alreadyGuessed) {
+		for(String validWord:this.words) {
+			if(word.toLowerCase().equals(validWord.toLowerCase()) && !alreadyGuessed.contains(word)) {
+				addWord(word);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
