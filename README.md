@@ -178,6 +178,8 @@ Added Next Levels!
 
 - [ ] Add to show how many correct words the user inputted in that level
 
+## Day ..?
+I Finished it but i lost count of the days 
 
 
 
